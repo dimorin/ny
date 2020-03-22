@@ -1,59 +1,110 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-pwa" target="_blank" rel="noopener">pwa</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
-  </div>
+  <q-page class="flex flex-center">
+    
+    <q-input filled :value="begin_date" label="begin date" readonly>
+      <template v-slot:append>
+        <q-icon name="event" class="cursor-pointer">
+          <q-popup-proxy>
+            <q-date v-model="begin_date" mask="YYYYMMDD"></q-date>
+          </q-popup-proxy>
+        </q-icon>
+      </template>
+    </q-input>
+    <q-input filled :value="end_date" label="end date" readonly>
+      <template v-slot:append>
+        <q-icon name="event" class="cursor-pointer">
+          <q-popup-proxy>
+            <q-date v-model="end_date" mask="YYYYMMDD"></q-date>
+          </q-popup-proxy>
+        </q-icon>
+      </template>
+    </q-input>
+
+
+    <q-input filled type="search" v-model="ny_q" @keyup.enter="fetchData">
+      <template v-slot:append>
+          <q-icon name="search" />
+        </template>
+    </q-input>
+    <q-btn color="white" text-color="black" @click="fetchData" label="load" />
+
+    <!-- <ul>
+      <li v-for="item in ny_items" :key="item._id">
+        <a :href="item.web_url" target="_blank">
+          {{item.abstract}}
+        </a>        
+      </li>
+    </ul> -->
+
+
+    <q-table
+      grid
+      title="News"
+      :data="ny_items"
+      :columns="columns"
+      row-key="_id"
+      :filter="filter"
+      color="primary"
+      :loading="loading"
+      hide-header
+    >
+    </q-table>
+
+
+    <div>
+      해야될 거<br>      
+      페이지네이션<br>
+      카드<br>
+      localstorage에 저장하고 불러오기<br>
+      *뉴욕타임즈 api 다시 살펴보기 force<br>
+      https://newsapi.org/ 
+    </div>
+  </q-page>
 </template>
 
+<style>
+</style>
+
 <script>
+import axios from 'axios'
+import {date} from 'quasar'
 export default {
   name: 'HelloWorld',
-  props: {
-    msg: String
-  }
+  data(){
+      return{
+        loading:false,
+        filter: '',
+      columns: [
+        { name: 'abstract', required: true, label: 'abstract',align: 'left', field: 'abstract', sortable: true},
+        { name: 'web_url', align: 'center', label: 'web_url', field: 'web_url', sortable: true },
+        { name: '_id', label: '_id', field: '_id', sortable: true },
+      ],
+        ny_q:'',
+        ny_items:[],
+        begin_date:null,
+        end_date:null,
+      }
+    },
+    methods:{
+      
+      fetchData(){
+        this.loading = true;
+        axios.get(`https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${this.ny_q}&api-key=${process.env.VUE_APP_ID}&begin_date=${this.begin_date}&end_date=${this.end_date}`)
+        .then(response => {          
+          this.ny_items = response.data.response.docs;
+          this.loading = false;
+        })            
+      },
+      pad(num){
+        return (num < 10)? '0'+num:num;
+      },
+       
+    },
+    created(){
+      let today = Date.now();
+      let formattedToday = date.formatDate(today, 'YYYYMMDD');
+      this.begin_date = formattedToday;
+      this.end_date = formattedToday;
+    }
 }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
-</style>
