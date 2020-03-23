@@ -76,22 +76,22 @@
               </q-item-section>
             </q-item>
 
-            <q-item to="/home" exact clickable v-ripple>
+            <q-item to="/ny" exact clickable v-ripple>
               <q-item-section avatar>
                 <q-icon name="code" />
               </q-item-section>
 
               <q-item-section>
-                Test1
+                NY
               </q-item-section>
             </q-item>
-            <q-item to="/about" exact clickable v-ripple>
+            <q-item to="/nytop" exact clickable v-ripple>
               <q-item-section avatar>
                 <q-icon name="code" />
               </q-item-section>
 
               <q-item-section>
-                Test2
+                NYTop
               </q-item-section>
             </q-item>
           </q-list>

@@ -52,12 +52,11 @@
 
 
     <div>
-      해야될 거<br>      
-      페이지네이션<br>
-      카드<br>
+      해야될 거<br>
       localstorage에 저장하고 불러오기<br>
-      *뉴욕타임즈 api 다시 살펴보기 force<br>
-      https://newsapi.org/ 
+      udemy 강좌<br>
+      지도<br>
+      newsapi https supoort<br>
     </div>
   </q-page>
 </template>
