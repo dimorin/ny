@@ -23,7 +23,7 @@ export default {
   },
   methods:{
     fetchData(){
-      
+      console.log('sources fetch');
       axios.get(`http://newsapi.org/v2/sources?apiKey=${process.env.VUE_APP_NEWS_KEY}`)
       .then(response => {
         console.log(response.data.sources);

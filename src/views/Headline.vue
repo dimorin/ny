@@ -23,10 +23,10 @@ export default {
   },
   methods:{
     fetchData(){
-      
+      console.log('headline fetch');
       axios.get(`http://newsapi.org/v2/top-headlines?country=us&apiKey=${process.env.VUE_APP_NEWS_KEY}`)
       .then(response => {
-        //console.log(response.data.articles);
+        console.log(response.data.articles);
         this.articles_items = response.data.articles;
       })            
     },
