@@ -3,6 +3,8 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Todo from '@/views/Todo.vue'
 import Help from '@/views/Help.vue'
+import Sources from '@/views/Sources.vue'
+import Headline from '@/views/Headline.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -20,6 +22,16 @@ const routes = [
     path: '/help',
     name: 'Help',
     component: Help
+  },
+  {
+    path: '/sources',
+    name: 'Sources',
+    component: Sources
+  },
+  {
+    path: '/headline',
+    name: 'headline',
+    component: Headline
   },
   {
     path: '/about',

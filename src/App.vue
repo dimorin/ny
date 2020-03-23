@@ -55,6 +55,27 @@
                 Help
               </q-item-section>
             </q-item>
+
+            <q-item to="/sources" exact clickable v-ripple>
+              <q-item-section avatar>
+                <q-icon name="help" />
+              </q-item-section>
+
+              <q-item-section>
+                Sources
+              </q-item-section>
+            </q-item>
+
+            <q-item to="/headline" exact clickable v-ripple>
+              <q-item-section avatar>
+                <q-icon name="help" />
+              </q-item-section>
+
+              <q-item-section>
+                Headline
+              </q-item-section>
+            </q-item>
+
             <q-item to="/home" exact clickable v-ripple>
               <q-item-section avatar>
                 <q-icon name="code" />
