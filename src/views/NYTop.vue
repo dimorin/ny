@@ -1,7 +1,7 @@
 <template>
   <div>
     <h2>NYtimes Top Stories</h2>
-    
+    <img src="../assets/logo.png">
 
     <q-list bordered padding class="rounded-borders">      
       <q-item clickable v-ripple v-for="(item,index) in getData" :key="index" @click="link(item.short_url)">
