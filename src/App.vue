@@ -95,13 +95,23 @@
               </q-item-section>
             </q-item>
 
+            <q-item to="/usamap" exact clickable v-ripple>
+              <q-item-section avatar>
+                <q-icon name="language" />
+              </q-item-section>
+
+              <q-item-section>
+                USA map
+              </q-item-section>
+            </q-item>
+
             <q-item to="/worldmap" exact clickable v-ripple>
               <q-item-section avatar>
                 <q-icon name="language" />
               </q-item-section>
 
               <q-item-section>
-                Worldmap
+                World map
               </q-item-section>
             </q-item>
 

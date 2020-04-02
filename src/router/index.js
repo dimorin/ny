@@ -5,6 +5,7 @@ import Todo from '@/views/Todo.vue'
 import Help from '@/views/Help.vue'
 import Sources from '@/views/Sources.vue'
 import Headline from '@/views/Headline.vue'
+import USAmap from '@/views/USAmap.vue'
 import Worldmap from '@/views/Worldmap.vue'
 Vue.use(VueRouter)
 
@@ -41,6 +42,11 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/NYTop.vue')
+  },
+  {
+    path: '/usamap',
+    name: 'usamap',
+    component: USAmap
   },
   {
     path: '/worldmap',
