@@ -7,5 +7,8 @@ module.exports = {
   },
   transpileDependencies: [
     'quasar'
-  ]
+  ],
+  devServer:{
+    proxy:'https://kapi.kakao.com'
+  }
 }
