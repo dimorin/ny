@@ -4,8 +4,12 @@
       <ul>
       <li v-for="item in sources_items" :key="item._id">
         <a :href="item.url" target="_blank">
-          {{item.name}} [{{item.country}}]
-        </a>        
+          {{item.name}} 
+        </a>    
+        <p>{{item.description}}</p>    
+        <p>category : {{item.category}}</p>    
+        <p>language : {{item.language}}</p>    
+        <p>country : {{item.country}}</p>    
       </li>
     </ul>
   </q-page>
