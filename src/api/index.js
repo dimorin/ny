@@ -11,4 +11,7 @@ function translationData(src_lang,  target_lang, target){
           }}
       )
 }
-export {fetchCountryHeadline, translationData}
+function fetchSources(){
+    return axios.get(`https://newsapi.org/v2/sources?apiKey=${process.env.VUE_APP_NEWS_KEY}`)
+}
+export {fetchCountryHeadline, translationData, fetchSources}

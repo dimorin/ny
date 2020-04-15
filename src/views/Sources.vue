@@ -2,7 +2,7 @@
   <q-page class="q-pa-lg">
       <h5 class="q-mt-none">Sources</h5>
       <ul>
-      <li v-for="item in sources_items" :key="item._id">
+      <li v-for="item in sources" :key="item._id">
         <a :href="item.url" target="_blank">
           {{item.name}} 
         </a>    
@@ -16,28 +16,19 @@
 </template>
 
 <script>
-import axios from 'axios'
+//import axios from 'axios'
+import {mapState, mapActions} from 'vuex'
 export default {
-  data(){
-    return{
-      
-      sources_items:[],
-      
-    }
+  computed:{
+    ...mapState(['sources'])
   },
   methods:{
-    fetchData(){
-      console.log('sources fetch');
-      axios.get(`https://newsapi.org/v2/sources?apiKey=${process.env.VUE_APP_NEWS_KEY}`)
-      .then(response => {
-        console.log(response.data.sources);
-        this.sources_items = response.data.sources;
-      })            
-    },
-      
+    ...mapActions(['SETSOURCES']),   
   },
   created(){
-    this.fetchData();
+    if(this.sources.length == 0){
+        this.SETSOURCES()
+    }       
   }
 }
 </script>

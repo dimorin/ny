@@ -101,7 +101,7 @@ export default {
     Headline_list
   },
   computed:{
-    ...mapState(['country_headline','country_by', 'category_by']),
+    ...mapState(['country_headline','country_by', 'category_by','sources']),
     countryBy:{
       get(){
         return this.country_by
@@ -120,15 +120,24 @@ export default {
     }
   },  
   methods:{
-    ...mapActions(['SET_COUNTRY_HEADLINE', 'SET_TRANSLATION_DATA','SETCOUNTRYBY','SETCATEGORYBY']),
+    ...mapActions(['SET_COUNTRY_HEADLINE', 'SET_TRANSLATION_DATA','SETCOUNTRYBY','SETCATEGORYBY','SETSOURCES']),
    
     translationData(obj){
       let target_obj = {src_lang:'en',target_lang:'kr',target:obj.target,index:obj.index};
       this.SET_TRANSLATION_DATA(target_obj);  
     }
   },
+  watch:{
+    sources:function(){
+      this.SET_COUNTRY_HEADLINE()
+    }
+  },
   created(){
-    this.SET_COUNTRY_HEADLINE()
+    if(this.sources.length == 0){
+        this.SETSOURCES()
+    }else{
+      this.SET_COUNTRY_HEADLINE()
+    }    
   }
 }
 </script>
