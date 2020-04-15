@@ -7,8 +7,8 @@ export default new Vuex.Store({
   state: {
     country_headline:[],
     /* country_headline_translated:[], // 사용하고 있는지 확인하기 */
-    country_by:'us'
-
+    country_by:'us',
+    category_by:'general'
   },
   mutations: {
     SET_COUNTRY_HEADLINE(state, articles){
@@ -20,11 +20,17 @@ export default new Vuex.Store({
     },
     SETCOUNTRYBY(state,value){
       state.country_by = value;
+    },
+    SETCATEGORYBY(state,value){
+      state.category_by = value;
+    },
+    RESETCATEGORYBY(state){
+      state.category_by = 'general';
     }
   },
   actions: {
     async SET_COUNTRY_HEADLINE({commit, state}){
-      const response = await fetchCountryHeadline(state.country_by);
+      const response = await fetchCountryHeadline(state.country_by, state.category_by);
       const articles = response.data.articles;
       articles.map(article => Object.assign(article,{translated_text:''}))
       commit('SET_COUNTRY_HEADLINE', articles)
@@ -36,6 +42,11 @@ export default new Vuex.Store({
     },
     SETCOUNTRYBY({dispatch,commit}, value){      
       commit('SETCOUNTRYBY',value)
+      commit('RESETCATEGORYBY')
+      dispatch('SET_COUNTRY_HEADLINE')
+    },
+    SETCATEGORYBY({dispatch,commit},value){
+      commit('SETCATEGORYBY',value)
       dispatch('SET_COUNTRY_HEADLINE')
     }
   },
