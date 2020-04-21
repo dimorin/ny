@@ -77,6 +77,11 @@ export default new Vuex.Store({
     totalResults:0,
   },
   mutations: {
+    test(state, index){
+      console.log('mutations : '+index)
+      console.log(state.country_headline.slice(0,index*20))
+      state.country_headline = state.country_headline.slice(0,index*20);
+    },
     SET_COUNTRY_HEADLINE(state, articles){
       let country = state.countryByOptions.find(item => item.value == state.country_by);
       let lang = country.lang

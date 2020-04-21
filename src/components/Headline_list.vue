@@ -1,15 +1,35 @@
 <template>
-    <li>
-        <a :href="item.url" target="_blank">
-          <span v-if="!stateoftranslation">{{item.title}}</span> 
-          <span v-else>{{ item.translated_text }}</span>          
-          [{{item.source.name}}]
-        </a>   
-        <button v-if="item.src_lang" @click="translationData(item.title,item_index,item.src_lang)">
-            <span v-if="!stateoftranslation">번역</span> 
-            <span v-else>원본</span>
-        </button>        
-    </li>
+    <div class="col-md-4 col-lg-3">
+        <q-card class="my-card" flat bordered>
+            <img :src="item.urlToImage">
+            <q-card-section>
+                <div class="text-h6">
+                    <a :href="item.url" target="_blank">
+                        <span v-if="!stateoftranslation">{{item.title}}</span> 
+                        <span v-else>{{ item.translated_text }}</span>          
+                    </a>
+                </div>
+                <div class="text-subtitle2">by {{item.author}}</div>
+            </q-card-section>
+            <q-separator />
+            <q-card-actions>            
+                <span>{{item.publishedAt}}</span>
+                <span>{{item.source.name}}</span>
+                <q-btn flat color="primary" v-if="item.src_lang" @click="translationData(item.title,item_index,item.src_lang)">
+                    <span v-if="!stateoftranslation">번역</span> 
+                    <span v-else>원본</span>
+                </q-btn> 
+            </q-card-actions>
+
+    
+            
+            <!-- <button v-if="item.src_lang" @click="translationData(item.title,item_index,item.src_lang)">
+                <span v-if="!stateoftranslation">번역</span> 
+                <span v-else>원본</span>
+            </button>  -->       
+        </q-card>
+    </div>
+    
 </template>
 
 <script>

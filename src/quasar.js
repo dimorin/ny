@@ -8,7 +8,7 @@ import { Quasar, Dialog, Notify } from 'quasar'
 
 Vue.use(Quasar, {
   config: {},
-  components: {  },
+  components: { },
   directives: { /* not needed if importStrategy is not 'manual' */ },
   plugins: {
     Dialog, Notify, 
