@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 function fetchCountryHeadline(country, category){
-    let category_value = category || 'general'
+    let category_value = category || 'general'    
     return axios.get(`https://newsapi.org/v2/top-headlines?country=${country}&apiKey=${process.env.VUE_APP_NEWS_KEY}&category=${category_value}`)
 }
 function translationData(src_lang,  target_lang, target){

@@ -10,5 +10,5 @@ module.exports = {
   ],
   devServer:{
     proxy:'https://kapi.kakao.com'
-  }
+  },
 }
