@@ -74,14 +74,11 @@ export default new Vuex.Store({
     ],
     country_by:'us',
     category_by:'general',
+    pageSize:20,
+    page:1,
     totalResults:0,
   },
-  mutations: {
-    test(state, index){
-      console.log('mutations : '+index)
-      console.log(state.country_headline.slice(0,index*20))
-      state.country_headline = state.country_headline.slice(0,index*20);
-    },
+  mutations: {    
     SET_COUNTRY_HEADLINE(state, articles){
       let country = state.countryByOptions.find(item => item.value == state.country_by);
       let lang = country.lang
@@ -90,11 +87,18 @@ export default new Vuex.Store({
       })
       state.country_headline = articles
     },
+    SETMOREPAGE(state, articles){
+      let country = state.countryByOptions.find(item => item.value == state.country_by);
+      let lang = country.lang
+      articles.map(article => {
+        Object.assign(article,{translated_text:'',src_lang:lang})
+      })      
+      state.country_headline = state.country_headline.concat(articles)//state.country_headline 에 state.page 내용을 합치기
+    },
     SETTOTLRESULTS(state,total){
       state.totalResults = total
     },
-    SET_TRANSLATION_DATA(state, obj){
-      //console.log(obj.translated_text);
+    SET_TRANSLATION_DATA(state, obj){      
       state.country_headline[obj.index].translated_text = obj.translated_text;
     },
     SETCOUNTRYBY(state,value){
@@ -108,6 +112,9 @@ export default new Vuex.Store({
     },
     SETSOURCES(state, sources){
       state.sources = sources
+    },
+    SETPAGE(state, page){
+      state.page = page
     }
   },
   actions: {
@@ -117,7 +124,7 @@ export default new Vuex.Store({
       commit('SETSOURCES',sources)
     },
     async SET_COUNTRY_HEADLINE({commit, state}){      
-      const response = await fetchCountryHeadline(state.country_by, state.category_by);
+      const response = await fetchCountryHeadline(state.country_by, state.category_by, state.pageSize, state.page);
       const total = response.data.totalResults
       commit('SETTOTLRESULTS',total)
       const articles = response.data.articles;            
@@ -131,11 +138,19 @@ export default new Vuex.Store({
     SETCOUNTRYBY({dispatch,commit}, value){      
       commit('SETCOUNTRYBY',value)
       commit('RESETCATEGORYBY')
+      commit('SETPAGE',1) //page 1로 초기화
       dispatch('SET_COUNTRY_HEADLINE')
     },
     SETCATEGORYBY({dispatch,commit},value){
-      commit('SETCATEGORYBY',value)
+      commit('SETCATEGORYBY',value)      
+      commit('SETPAGE',1) //page 1로 초기화
       dispatch('SET_COUNTRY_HEADLINE')
+    },
+    async SETMOREPAGE({commit,state}){      
+      commit('SETPAGE',++state.page) 
+      const response = await fetchCountryHeadline(state.country_by, state.category_by, state.pageSize, state.page);
+      const articles = response.data.articles;            
+      commit('SETMOREPAGE', articles)
     }
   },
   modules: {

@@ -2,8 +2,8 @@
   <q-page class="q-pa-lg">
       <h5 class="q-mt-none">Headline </h5>
       <p>
-        infinite scroll,지도, load할 때 axios bar, 이미지 로딩<br>
-        news api 출처 밝히기, 관심 나라 즐겨찾기
+        지원하는 국가 지도로 표현하기, load할 때 axios bar, 이미지 로딩<br>
+        news api 출처 밝히기, 디폴트 나라는 랜던으로 뽑기, 국제 기념일https://ko.wikipedia.org/wiki/%EA%B5%AD%EC%A0%9C_%EA%B8%B0%EB%85%90%EC%9D%BC
       </p>
       <div class="q-gutter-md row items-start">
         <q-select outlined  v-model="countryBy" :options="countryByOptions" label="country" emit-value map-options class="col">
@@ -29,20 +29,19 @@
       </div>
     
       
-      <q-infinite-scroll @load="onLoad" :offset="100" class="row q-col-gutter-md">
+      <div class="row q-col-gutter-md">
         <Headline_list v-for="(item,i) in country_headline" :key="i" :item="item" :item_index="i" @translationData="translationData"></Headline_list>
-        <template v-slot:loading>
-          <div class="row justify-center q-my-md">
-            <q-spinner-dots color="primary" size="40px" />
-          </div>
-        </template>
-      </q-infinite-scroll>
-      
+      </div>
+      <div class="q-my-md text-center">
+        <q-btn flat @click="fetchMorePage" v-if="haveMorePage">
+          <q-spinner-cube color="primary" size="xl" />      
+        </q-btn>
+      </div>
   </q-page>
 </template>
 
 <script>
-import { mapState, mapActions, mapMutations} from 'vuex'
+import { mapState, mapActions} from 'vuex'
 import Headline_list from '../components/Headline_list'
 
 export default {
@@ -55,7 +54,7 @@ export default {
     Headline_list
   },
   computed:{
-    ...mapState(['countryByOptions','categoryByOptions','country_headline','country_by', 'category_by']),    
+    ...mapState(['countryByOptions','categoryByOptions','country_headline','country_by', 'category_by','pageSize','page','totalResults']),    
     countryBy:{
       get(){
         return this.country_by
@@ -71,26 +70,27 @@ export default {
       set(value){
         this.SETCATEGORYBY(value)
       }
+    },
+    haveMorePage(){      
+      let have;
+      let lastPage = Math.ceil(this.totalResults / this.pageSize);
+      let nextPage = parseInt(this.page) + 1;
+      if(nextPage > lastPage){
+        have = false
+      }else{
+        have = true
+      }
+      return have
     }
   },  
   methods:{
-    ...mapActions(['SET_COUNTRY_HEADLINE', 'SET_TRANSLATION_DATA','SETCOUNTRYBY','SETCATEGORYBY']),
-    ...mapMutations(['test']),
+    ...mapActions(['SET_COUNTRY_HEADLINE', 'SET_TRANSLATION_DATA','SETCOUNTRYBY','SETCATEGORYBY','SETMOREPAGE']),    
     translationData(obj){
       let target_obj = {src_lang:obj.lang,target_lang:'kr',target:obj.target,index:obj.index};
       this.SET_TRANSLATION_DATA(target_obj);  
     },
-    onLoad (index,done) {
-      console.log('onload : '+index)
-      // index를 state에 보내기
-      // country_headline의 사본 state를 만들기 list는 사본에서 가져오기
-      this.test(index)
-        if(index <10){
-          done()      
-        }else{
-          done(true);//로드 중지
-        }
-      
+    fetchMorePage(){      
+      this.SETMOREPAGE();
     }
   },
   created(){    

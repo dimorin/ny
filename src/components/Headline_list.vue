@@ -19,6 +19,7 @@
                     <span v-if="!stateoftranslation">번역</span> 
                     <span v-else>원본</span>
                 </q-btn> 
+                <span>{{item_index}}</span>
             </q-card-actions>
 
     
