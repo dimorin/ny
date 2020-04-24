@@ -7,6 +7,9 @@ import Sources from '@/views/Sources.vue'
 import Headline from '@/views/Headline.vue'
 import USAmap from '@/views/USAmap.vue'
 import Worldmap from '@/views/Worldmap.vue'
+import Worldmap2 from '@/views/Worldmap2.vue'
+import Datamap from '@/views/Datamap.vue'
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -52,6 +55,16 @@ const routes = [
     path: '/worldmap',
     name: 'worldmap',
     component: Worldmap
+  },
+  {
+    path: '/worldmap2',
+    name: 'worldmap2',
+    component: Worldmap2
+  },
+  {
+    path: '/datamap',
+    name: 'datamap',
+    component: Datamap
   },
 ]
 

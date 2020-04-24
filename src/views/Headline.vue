@@ -2,7 +2,7 @@
   <q-page class="q-pa-lg">
       <h5 class="q-mt-none">Headline </h5>
       <p>
-        지원하는 국가 지도로 표현하기, load할 때 axios bar, 이미지 로딩<br>
+        지원하는 국가 지도로 표현하기(index_ny.html), load할 때 axios bar, 이미지 로딩<br>
         news api 출처 밝히기, 디폴트 나라는 랜던으로 뽑기, 국제 기념일https://ko.wikipedia.org/wiki/%EA%B5%AD%EC%A0%9C_%EA%B8%B0%EB%85%90%EC%9D%BC
       </p>
       <div class="q-gutter-md row items-start">

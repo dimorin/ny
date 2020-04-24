@@ -115,6 +115,24 @@
               </q-item-section>
             </q-item>
 
+            <q-item to="/worldmap2" exact clickable v-ripple>
+              <q-item-section avatar>
+                <q-icon name="language" />
+              </q-item-section>
+
+              <q-item-section>
+                World map2
+              </q-item-section>
+            </q-item>
+            <q-item to="/datamap" exact clickable v-ripple>
+              <q-item-section avatar>
+                <q-icon name="language" />
+              </q-item-section>
+
+              <q-item-section>
+                datamap
+              </q-item-section>
+            </q-item>
           </q-list>
         </q-scroll-area>
 
