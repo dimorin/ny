@@ -1,4 +1,5 @@
-# ny [deploy](https://condescending-dubinsky-1e95e0.netlify.com/)
+# ny 
+[https://nyquasar.netlify.app](https://nyquasar.netlify.app)
 
 ## Project setup
 ```
